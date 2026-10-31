@@ -67,11 +67,8 @@ export default async function DestinationDetailsPage({
   try {
     dest = await getDestination(id);
   } catch (error) {
-    if (error instanceof Error && error.message === "NEXT_HTTP_ERROR_FALLBACK;404") {
-      throw error;
-    }
-
-    notFound();
+    console.error("DETAILS PAGE ERROR:", error);
+    throw error;
   }
 
   const highlights = [
