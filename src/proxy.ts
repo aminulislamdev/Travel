@@ -1,18 +1,23 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
 
-const SESSION_COOKIE = "better-auth.session_token";
-
-const protectedRoutes = ["/profile", "/my-bookings", "/add-destination"];
+const protectedRoutes = [
+  "/profile",
+  "/my-bookings",
+  "/add-destination",
+];
 const authRoutes = ["/sign-in", "/sign-up"];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const hasSessionCookie = request.cookies.has(SESSION_COOKIE);
+  const hasSessionCookie = !!getSessionCookie(request);
 
-  const isProtectedRoute = protectedRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`),
-  );
+  const isProtectedRoute =
+    protectedRoutes.some(
+      (route) => pathname === route || pathname.startsWith(`${route}/`),
+    ) || pathname.startsWith("/all-destinations/");
+
   const isAuthRoute = authRoutes.includes(pathname);
 
   if (isAuthRoute && hasSessionCookie) {
