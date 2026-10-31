@@ -4,6 +4,7 @@ import { useSyncExternalStore, useEffect, useState } from "react";
 import { useSession } from "@/lib/auth-client";
 import ProfileSidebar from "@/components/profile/ProfileSidebar";
 import TravelStats from "@/components/profile/TravelStats";
+import { GetTokenClient } from "@/lib/GetTokenClient";
 
 type ExtendedUser = {
   name: string;
@@ -35,7 +36,10 @@ export default function ProfilePage() {
     if (session?.user?.email) {
       const fetchBookings = async () => {
         try {
-          const res = await fetch(`https://travel-server-swart.vercel.app/all-booking/${session.user.email}`);
+          const token = await GetTokenClient();
+          const res = await fetch(`https://travel-server-swart.vercel.app/all-booking/${session.user.email}`,
+            { headers: { Authorization: `Bearer ${token}` }}
+          );
           const data: Booking[] = await res.json();
           setBookings(data);
         } catch (error) {
