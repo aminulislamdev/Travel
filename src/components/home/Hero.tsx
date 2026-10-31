@@ -1,64 +1,139 @@
-import { Button } from "@/components/ui/button";
-import { MapPin, Calendar, Users, Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import Image from "next/image";
-import banner from "../../../public/assets/Banner.png"
+import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative h-[85vh] w-full flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
+    <section
+      aria-labelledby="hero-heading"
+      className="relative flex min-h-[85vh] w-full flex-col items-center justify-center overflow-hidden pt-16"
+    >
       <div className="absolute inset-0">
         <Image
-          src={banner}
-          alt="Hero Background"
-          className="w-full h-full object-cover"
+          src="/assets/Banner.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/40" /> {/* Overlay */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-linear-to-b from-black/30 via-black/20 to-black/60"
+        />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center text-white px-4 w-full max-w-5xl mt-10">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
+      <div className="relative z-10 mx-auto mb-8 max-w-4xl px-4 text-center text-white md:mb-24">
+        <h1
+          id="hero-heading"
+          className="mb-4 font-heading text-5xl leading-tight font-semibold text-balance md:text-7xl"
+        >
           Discover Your <br /> Next Adventure
         </h1>
-        <p className="text-lg md:text-xl mb-8 text-gray-200">
-          Explore handpicked destinations and unforgettable experiences around the world.
+        <p className="mx-auto mb-8 max-w-lg text-sm leading-relaxed font-light text-pretty text-gray-200 md:text-base">
+          Explore breathtaking destinations and create unforgettable memories
+          with our curated travel experiences.
         </p>
 
-        {/* Floating Search Bar */}
-        <div className="bg-white rounded-xl p-4 shadow-2xl flex flex-col md:flex-row gap-4 items-center text-gray-800 mt-12 w-full max-w-4xl mx-auto">
-          <div className="flex-1 flex items-center gap-2 md:border-r pr-4 w-full">
-            <MapPin className="text-gray-400" />
-            <div className="flex flex-col w-full text-left">
-              <label className="text-xs font-semibold text-gray-500">Location</label>
-              <input type="text" placeholder="Where to?" className="outline-none text-sm bg-transparent" />
-            </div>
-          </div>
-          <div className="flex-1 flex items-center gap-2 md:border-r pr-4 w-full">
-            <Calendar className="text-gray-400" />
-            <div className="flex flex-col w-full text-left">
-              <label className="text-xs font-semibold text-gray-500">Check-in</label>
-              <input type="text" placeholder="Add date" className="outline-none text-sm bg-transparent" />
-            </div>
-          </div>
-          <div className="flex-1 flex items-center gap-2 md:border-r pr-4 w-full">
-            <Calendar className="text-gray-400" />
-            <div className="flex flex-col w-full text-left">
-              <label className="text-xs font-semibold text-gray-500">Check-out</label>
-              <input type="text" placeholder="Add date" className="outline-none text-sm bg-transparent" />
-            </div>
-          </div>
-          <div className="flex-1 flex items-center gap-2 w-full">
-            <Users className="text-gray-400" />
-            <div className="flex flex-col w-full text-left">
-              <label className="text-xs font-semibold text-gray-500">Guests</label>
-              <input type="text" placeholder="2 Adults" className="outline-none text-sm bg-transparent" />
-            </div>
-          </div>
-          <Button className="bg-blue-500 hover:bg-blue-600 w-full md:w-auto px-8 py-6 rounded-lg mt-2 md:mt-0">
-            <Search className="mr-2 h-5 w-5" /> Search
-          </Button>
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Link
+            href="/all-destination"
+            className="flex w-full items-center justify-center gap-2 rounded-sm bg-blue-400 px-8 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark sm:w-auto"
+          >
+            EXPLORE NOW <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+          <Link
+            href="/all-destination"
+            className="w-full rounded-sm border border-white/30 bg-white/20 px-8 py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/30 sm:w-auto"
+          >
+            VIEW DESTINATIONS
+          </Link>
         </div>
+      </div>
+
+      <div className="relative z-20 mt-4 w-full md:absolute md:bottom-0 md:mt-0">
+        <form
+          action="/#destinations"
+          role="search"
+          aria-label="Search destinations"
+          className="mx-auto flex w-full flex-col items-stretch border-t border-white/20 bg-white/20 backdrop-blur-md md:flex-row md:items-center"
+        >
+          <div className="flex-1 border-b border-white/20 px-6 py-3 text-left md:border-r md:border-b-0">
+            <label
+              htmlFor="search-location"
+              className="mb-1 block text-xs font-medium text-white/90"
+            >
+              Location
+            </label>
+            <input
+              id="search-location"
+              name="location"
+              type="text"
+              autoComplete="off"
+              placeholder="Address, City or Zip"
+              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/60"
+            />
+          </div>
+
+          <div className="flex-1 border-b border-white/20 px-6 py-3 text-left md:border-r md:border-b-0">
+            <label
+              htmlFor="search-duration"
+              className="mb-1 block text-xs font-medium text-white/90"
+            >
+              Date/Duration
+            </label>
+            <input
+              id="search-duration"
+              name="duration"
+              type="text"
+              autoComplete="off"
+              placeholder="Anytime, 3 Days"
+              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/60"
+            />
+          </div>
+
+          <div className="flex-1 border-b border-white/20 px-6 py-3 text-left md:border-r md:border-b-0">
+            <label
+              htmlFor="search-budget"
+              className="mb-1 block text-xs font-medium text-white/90"
+            >
+              Budget
+            </label>
+            <input
+              id="search-budget"
+              name="budget"
+              type="text"
+              autoComplete="off"
+              placeholder="$0 - $3000"
+              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/60"
+            />
+          </div>
+
+          <div className="flex-1 border-b border-white/20 px-6 py-3 text-left md:border-b-0">
+            <label
+              htmlFor="search-people"
+              className="mb-1 block text-xs font-medium text-white/90"
+            >
+              People
+            </label>
+            <input
+              id="search-people"
+              name="people"
+              type="text"
+              autoComplete="off"
+              placeholder="5-10"
+              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/60"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="flex w-full items-center justify-center gap-2 bg-blue-400 px-10 py-4 font-semibold text-white transition hover:bg-brand-dark md:w-auto md:py-6"
+          >
+            <Search className="h-5 w-5" aria-hidden="true" />
+            <span className="text-lg">Search</span>
+          </button>
+        </form>
       </div>
     </section>
   );
