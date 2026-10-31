@@ -10,6 +10,7 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
+import { GetTokenClient } from "@/lib/GetTokenClient";
 
 export default function CancelBookingButton({ bookingId }: { bookingId: string }) {
   const router = useRouter();
@@ -18,9 +19,15 @@ export default function CancelBookingButton({ bookingId }: { bookingId: string }
 
   const handleCancel = async () => {
     setIsDeleting(true);
+
+    const token = await GetTokenClient();
+
     try {
       const res = await fetch(`https://travel-server-swart.vercel.app/all-booking/${bookingId}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!res.ok) throw new Error("Failed to cancel booking");
